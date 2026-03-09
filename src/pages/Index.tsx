@@ -233,9 +233,9 @@ const Index = () => {
         </Drawer>
       ) : (
         <Dialog open={open} onOpenChange={closeAll}>
-          <DialogContent className="max-w-5xl rounded-3xl border-border bg-card p-6 shadow-soft">
+          <DialogContent className="max-w-xl rounded-2xl border-border bg-card p-5 shadow-soft">
             <DialogHeader>
-              <DialogTitle className="text-4xl text-text-title">{view === "main" ? "兑换卡密" : "卡密兑换记录"}</DialogTitle>
+              <DialogTitle className="text-base font-semibold text-text-title">{view === "main" ? "兑换卡密" : "卡密兑换记录"}</DialogTitle>
               <DialogDescription className="sr-only">兑换弹窗</DialogDescription>
             </DialogHeader>
             {view === "main" ? (
