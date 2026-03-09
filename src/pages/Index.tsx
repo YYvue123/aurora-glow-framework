@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Moon, Sun, Gift, Sparkles } from "lucide-react";
+import { Moon, Sun, Gift, FileText } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -20,8 +20,8 @@ import {
 } from "@/components/ui/drawer";
 
 const THEME_KEY = "tech-theme";
-
 type ThemeMode = "light" | "dark";
+type ModalView = "main" | "history";
 
 const getInitialTheme = (): ThemeMode => {
   if (typeof window === "undefined") return "light";
@@ -30,36 +30,115 @@ const getInitialTheme = (): ThemeMode => {
   return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
 };
 
-const RedeemBody = () => (
-  <div className="space-y-5">
-    <div className="rounded-2xl border border-border bg-surface-card-2 p-4 shadow-soft transition-colors duration-200">
-      <label className="mb-2 block text-sm font-medium text-text-body-2">兑换码</label>
+const steps = [
+  {
+    title: "输入密钥",
+    desc: "准确输入您收到的卡密密钥，\n请注意区分大小写",
+  },
+  {
+    title: "点击兑换",
+    desc: "点击「立即兑换」，系统将自动完成有效性校验",
+  },
+  {
+    title: "开始使用",
+    desc: "兑换成功后，我们会自动为您的账户充值相应权益",
+  },
+];
+
+const QrFloating = () => (
+  <div className="absolute right-0 top-8 z-20 w-44 rounded-2xl border border-border bg-card p-3 shadow-soft">
+    <div className="mb-2 text-center text-xs text-text-body-2">扫码联系客服</div>
+    <div className="rounded-xl bg-surface-card-2 p-2">
+      <div className="grid aspect-square grid-cols-7 gap-0.5 rounded-lg bg-background p-1">
+        {Array.from({ length: 49 }).map((_, idx) => (
+          <div
+            key={idx}
+            className={idx % 2 === 0 || idx % 5 === 0 ? "rounded-[2px] bg-foreground" : "rounded-[2px] bg-surface-card-2"}
+          />
+        ))}
+      </div>
+    </div>
+  </div>
+);
+
+interface RedeemMainProps {
+  onOpenHistory: () => void;
+}
+
+const RedeemMain = ({ onOpenHistory }: RedeemMainProps) => {
+  const [showQr, setShowQr] = useState(false);
+
+  return (
+    <div className="space-y-5">
       <Input
-        placeholder="请输入兑换码"
-        className="h-11 rounded-xl border-border bg-background text-foreground placeholder:text-text-brief"
+        placeholder="请输入卡密"
+        className="h-12 rounded-2xl border-border bg-surface-card-2 text-foreground placeholder:text-text-brief"
       />
-    </div>
 
-    <div className="space-y-2 rounded-2xl border border-border bg-background p-4">
-      <p className="text-xs text-text-brief">使用说明</p>
-      <ul className="space-y-1.5 text-sm text-text-body-2">
-        <li>• 兑换码区分大小写，请完整输入。</li>
-        <li>• 每个兑换码仅可使用一次。</li>
-        <li>• 兑换成功后权益即时到账。</li>
-      </ul>
-    </div>
-
-    <div className="flex items-center gap-2 rounded-full bg-surface-hover px-3 py-2 text-xs text-text-body-2">
-      <Sparkles className="h-3.5 w-3.5 text-primary" />
-      安全兑换通道
-    </div>
-
-    <div className="grid grid-cols-2 gap-3">
-      <Button variant="outline" className="rounded-xl border-border hover:bg-surface-hover">
-        取消
+      <Button className="h-12 w-full rounded-full bg-tech-gradient text-primary-foreground transition-all duration-200 hover:opacity-90">
+        立即兑换
       </Button>
-      <Button className="rounded-xl bg-primary hover:bg-primary/90">立即兑换</Button>
+
+      <div className="h-px bg-border" />
+
+      <div className="space-y-3">
+        <div className="relative flex items-center justify-between">
+          <h3 className="text-[1.75rem] font-semibold leading-none text-text-title">操作流程</h3>
+          <button
+            type="button"
+            className="text-[1.75rem] text-text-body-2 transition-colors hover:text-primary"
+            onClick={() => setShowQr((prev) => !prev)}
+          >
+            联系客服
+          </button>
+          {showQr && <QrFloating />}
+        </div>
+
+        <div className="grid gap-3 md:grid-cols-3">
+          {steps.map((step, index) => (
+            <Card key={step.title} className="rounded-3xl border border-border bg-card p-5 shadow-soft">
+              <div className="mb-4 flex h-8 w-8 items-center justify-center rounded-full bg-primary text-sm font-semibold text-primary-foreground">
+                {index + 1}
+              </div>
+              <h4 className="mb-2 text-3xl font-semibold text-text-title">{step.title}</h4>
+              <p className="whitespace-pre-line text-xl leading-8 text-text-body-2">{step.desc}</p>
+            </Card>
+          ))}
+        </div>
+      </div>
+
+      <p className="text-[1.75rem] text-text-title">
+        想要查看历史兑换信息?点击
+        <button
+          type="button"
+          onClick={onOpenHistory}
+          className="ml-2 text-primary transition-opacity hover:opacity-80"
+        >
+          [兑换记录]
+        </button>
+      </p>
     </div>
+  );
+};
+
+interface RedeemHistoryProps {
+  onBackMain: () => void;
+}
+
+const RedeemHistory = ({ onBackMain }: RedeemHistoryProps) => (
+  <div className="space-y-6">
+    <div className="flex min-h-[280px] flex-col items-center justify-center rounded-2xl border border-border bg-background">
+      <div className="mb-4 rounded-2xl bg-surface-card-2 p-4">
+        <FileText className="h-12 w-12 text-text-brief" />
+      </div>
+      <p className="text-2xl text-text-body-2">暂无兑换记录</p>
+    </div>
+
+    <div className="h-px bg-border" />
+
+    <Button onClick={onBackMain} className="h-12 w-full rounded-full bg-primary text-primary-foreground hover:bg-primary/90">
+      关闭
+    </Button>
   </div>
 );
 
@@ -67,6 +146,7 @@ const Index = () => {
   const isMobile = useIsMobile();
   const [open, setOpen] = useState(false);
   const [theme, setTheme] = useState<ThemeMode>("light");
+  const [view, setView] = useState<ModalView>("main");
 
   useEffect(() => {
     const initial = getInitialTheme();
@@ -79,6 +159,16 @@ const Index = () => {
     setTheme(next);
     document.documentElement.classList.toggle("dark", next === "dark");
     window.localStorage.setItem(THEME_KEY, next);
+  };
+
+  const openRedeem = () => {
+    setView("main");
+    setOpen(true);
+  };
+
+  const closeAll = (next: boolean) => {
+    setOpen(next);
+    if (!next) setView("main");
   };
 
   return (
@@ -112,11 +202,11 @@ const Index = () => {
             <div className="rounded-full bg-surface-selected p-3">
               <Gift className="h-5 w-5 text-primary" />
             </div>
-            <h2 className="text-xl font-semibold text-text-title">输入兑换码解锁权益</h2>
-            <p className="text-sm text-text-body-2">支持桌面端弹窗与移动端底部弹出，交互遵循移动端友好逻辑。</p>
+            <h2 className="text-xl font-semibold text-text-title">点击按钮打开兑换弹窗</h2>
+            <p className="text-sm text-text-body-2">已按参考图重做，移动端自动从底部弹出。</p>
             <Button
               type="button"
-              onClick={() => setOpen(true)}
+              onClick={openRedeem}
               className="w-full rounded-xl bg-primary text-primary-foreground transition-colors duration-200 hover:bg-primary/90 sm:w-auto"
             >
               兑换
@@ -126,25 +216,33 @@ const Index = () => {
       </section>
 
       {isMobile ? (
-        <Drawer open={open} onOpenChange={setOpen}>
-          <DrawerContent className="max-h-[85vh] rounded-t-3xl border-border bg-card px-4 pb-6 pt-2">
+        <Drawer open={open} onOpenChange={closeAll}>
+          <DrawerContent className="max-h-[90vh] rounded-t-3xl border-border bg-card px-4 pb-6 pt-3">
             <DrawerHeader className="px-1 text-left">
-              <DrawerTitle className="text-xl text-text-title">兑换会员</DrawerTitle>
-              <DrawerDescription className="text-text-body-2">请输入兑换码以激活对应权益</DrawerDescription>
+              <DrawerTitle className="text-2xl text-text-title">{view === "main" ? "兑换卡密" : "卡密兑换记录"}</DrawerTitle>
+              <DrawerDescription className="sr-only">兑换弹窗</DrawerDescription>
             </DrawerHeader>
             <div className="px-1">
-              <RedeemBody />
+              {view === "main" ? (
+                <RedeemMain onOpenHistory={() => setView("history")} />
+              ) : (
+                <RedeemHistory onBackMain={() => setView("main")} />
+              )}
             </div>
           </DrawerContent>
         </Drawer>
       ) : (
-        <Dialog open={open} onOpenChange={setOpen}>
-          <DialogContent className="max-w-md rounded-3xl border-border bg-card p-6 shadow-soft">
+        <Dialog open={open} onOpenChange={closeAll}>
+          <DialogContent className="max-w-5xl rounded-3xl border-border bg-card p-6 shadow-soft">
             <DialogHeader>
-              <DialogTitle className="text-2xl text-text-title">兑换会员</DialogTitle>
-              <DialogDescription className="text-text-body-2">请输入兑换码以激活对应权益</DialogDescription>
+              <DialogTitle className="text-4xl text-text-title">{view === "main" ? "兑换卡密" : "卡密兑换记录"}</DialogTitle>
+              <DialogDescription className="sr-only">兑换弹窗</DialogDescription>
             </DialogHeader>
-            <RedeemBody />
+            {view === "main" ? (
+              <RedeemMain onOpenHistory={() => setView("history")} />
+            ) : (
+              <RedeemHistory onBackMain={() => setView("main")} />
+            )}
           </DialogContent>
         </Dialog>
       )}
