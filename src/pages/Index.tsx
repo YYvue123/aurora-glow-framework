@@ -300,7 +300,7 @@ const Index = () => {
   const content = (
     <>
       {view === "main" && <RedeemMain onOpenHistory={() => setView("history")} onRedeem={handleRedeem} />}
-      {view === "history" && <RedeemHistory onBackMain={() => setView("main")} />}
+      {view === "history" && <RedeemHistory onBackMain={() => setView("main")} isMobile={isMobile} />}
       {view === "success" && <SuccessView countdown={countdown} />}
     </>
   );
