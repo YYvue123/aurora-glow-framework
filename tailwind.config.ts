@@ -71,6 +71,12 @@ export default {
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
       },
+      boxShadow: {
+        soft: "0 10px 30px -12px hsl(var(--primary) / 0.25)",
+      },
+      backgroundImage: {
+        "tech-gradient": "linear-gradient(135deg, hsl(var(--tech-indigo)), hsl(var(--tech-emerald)))",
+      },
       keyframes: {
         "accordion-down": {
           from: {
@@ -88,10 +94,15 @@ export default {
             height: "0",
           },
         },
+        "float-pulse": {
+          "0%, 100%": { transform: "translateY(0px)", opacity: "0.35" },
+          "50%": { transform: "translateY(-10px)", opacity: "0.65" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        "float-pulse": "float-pulse 6s ease-in-out infinite",
       },
     },
   },
