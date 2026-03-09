@@ -130,7 +130,7 @@ const RedeemMain = ({ onOpenHistory, onRedeem }: RedeemMainProps) => {
           placeholder="请输入卡密"
           value={code}
           onChange={(e) => { setCode(e.target.value); setError(""); }}
-          className="h-12 rounded-2xl border-border bg-surface-card-2 text-foreground placeholder:text-text-brief focus:ring-1 focus:ring-primary focus:border-primary"
+          className="h-12 rounded-2xl border-border bg-surface-card-2 text-foreground placeholder:text-text-brief focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary"
         />
         {error && <p className="mt-1.5 text-sm text-destructive">{error}</p>}
       </div>
@@ -302,12 +302,12 @@ const Index = () => {
 
       {isMobile ? (
         <Drawer open={open} onOpenChange={closeAll}>
-          <DrawerContent className="max-h-[90vh] rounded-t-2xl border-border bg-card px-4 pb-5 pt-2">
+          <DrawerContent className="max-h-[85vh] rounded-t-2xl border-border bg-card px-4 pb-5 pt-2">
             <DrawerHeader className="px-1 text-left">
               <DrawerTitle className="text-base font-semibold text-text-title">{titleMap[view]}</DrawerTitle>
               <DrawerDescription className="sr-only">兑换弹窗</DrawerDescription>
             </DrawerHeader>
-            <div className="px-1">{content}</div>
+            <div className="max-h-[calc(85vh-80px)] overflow-y-auto px-1">{content}</div>
           </DrawerContent>
         </Drawer>
       ) : (
