@@ -107,14 +107,14 @@ const RedeemMain = ({ onOpenHistory }: RedeemMainProps) => {
         </div>
       </div>
 
-      <p className="text-[1.75rem] text-text-title">
+      <p className="text-sm text-text-body-2">
         想要查看历史兑换信息?点击
         <button
           type="button"
           onClick={onOpenHistory}
-          className="ml-2 text-primary transition-opacity hover:opacity-80"
+          className="ml-1 text-primary transition-opacity hover:opacity-80"
         >
-          [兑换记录]
+          「兑换记录」
         </button>
       </p>
     </div>
