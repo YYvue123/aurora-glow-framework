@@ -171,38 +171,74 @@ const RedeemMain = ({ onOpenHistory, onRedeem }: RedeemMainProps) => {
 /* ---------- Redeem History ---------- */
 interface RedeemHistoryProps {
   onBackMain: () => void;
+  isMobile?: boolean;
 }
 
-const RedeemHistory = ({ onBackMain }: RedeemHistoryProps) => (
-  <div className="space-y-5">
-    <div className="overflow-x-auto rounded-xl border border-border">
-      <Table>
-        <TableHeader>
-          <TableRow className="bg-surface-card-2">
-            <TableHead className="text-foreground">卡密</TableHead>
-            <TableHead className="text-foreground">兑换时间</TableHead>
-            <TableHead className="text-foreground">到期时间</TableHead>
-            <TableHead className="text-foreground">套餐类型</TableHead>
-            <TableHead className="text-foreground">状态</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {mockHistory.map((row) => (
-            <TableRow key={row.code}>
-              <TableCell className="font-mono text-sm text-foreground">{row.code}</TableCell>
-              <TableCell className="text-sm text-foreground">{row.redeemTime}</TableCell>
-              <TableCell className="text-sm text-foreground">{row.expireTime}</TableCell>
-              <TableCell className="text-sm text-foreground">{row.plan}</TableCell>
-              <TableCell>
+const RedeemHistory = ({ onBackMain, isMobile }: RedeemHistoryProps) => (
+  <div className="space-y-5 pt-2">
+    {isMobile ? (
+      /* Mobile: Card layout */
+      <div className="space-y-3">
+        {mockHistory.map((row) => (
+          <Card key={row.code} className="rounded-xl border border-border bg-card p-4">
+            <div className="space-y-2.5">
+              <div className="flex items-center justify-between">
+                <span className="text-sm text-text-body-2">卡密</span>
+                <span className="font-mono text-sm text-foreground">{row.code}</span>
+              </div>
+              <div className="flex items-center justify-between">
+                <span className="text-sm text-text-body-2">兑换时间</span>
+                <span className="text-sm text-foreground">{row.redeemTime}</span>
+              </div>
+              <div className="flex items-center justify-between">
+                <span className="text-sm text-text-body-2">到期时间</span>
+                <span className="text-sm text-foreground">{row.expireTime}</span>
+              </div>
+              <div className="flex items-center justify-between">
+                <span className="text-sm text-text-body-2">套餐类型</span>
+                <span className="text-sm text-foreground">{row.plan}</span>
+              </div>
+              <div className="flex items-center justify-between">
+                <span className="text-sm text-text-body-2">状态</span>
                 <Badge className={`rounded-full ${row.status === "已兑换" ? "bg-green-500 text-white hover:bg-green-600" : "bg-red-500 text-white hover:bg-red-600"}`}>
                   {row.status}
                 </Badge>
-              </TableCell>
+              </div>
+            </div>
+          </Card>
+        ))}
+      </div>
+    ) : (
+      /* Desktop: Table layout */
+      <div className="overflow-x-auto rounded-xl border border-border">
+        <Table>
+          <TableHeader>
+            <TableRow className="bg-surface-card-2">
+              <TableHead className="text-foreground">卡密</TableHead>
+              <TableHead className="text-foreground">兑换时间</TableHead>
+              <TableHead className="text-foreground">到期时间</TableHead>
+              <TableHead className="text-foreground">套餐类型</TableHead>
+              <TableHead className="text-foreground">状态</TableHead>
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </div>
+          </TableHeader>
+          <TableBody>
+            {mockHistory.map((row) => (
+              <TableRow key={row.code}>
+                <TableCell className="font-mono text-sm text-foreground">{row.code}</TableCell>
+                <TableCell className="text-sm text-foreground">{row.redeemTime}</TableCell>
+                <TableCell className="text-sm text-foreground">{row.expireTime}</TableCell>
+                <TableCell className="text-sm text-foreground">{row.plan}</TableCell>
+                <TableCell>
+                  <Badge className={`rounded-full ${row.status === "已兑换" ? "bg-green-500 text-white hover:bg-green-600" : "bg-red-500 text-white hover:bg-red-600"}`}>
+                    {row.status}
+                  </Badge>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </div>
+    )}
 
     <Button onClick={onBackMain} className="h-12 w-full rounded-full bg-primary text-primary-foreground hover:bg-primary/90">
       关闭
@@ -264,7 +300,7 @@ const Index = () => {
   const content = (
     <>
       {view === "main" && <RedeemMain onOpenHistory={() => setView("history")} onRedeem={handleRedeem} />}
-      {view === "history" && <RedeemHistory onBackMain={() => setView("main")} />}
+      {view === "history" && <RedeemHistory onBackMain={() => setView("main")} isMobile={isMobile} />}
       {view === "success" && <SuccessView countdown={countdown} />}
     </>
   );
