@@ -126,12 +126,12 @@ interface RedeemHistoryProps {
 }
 
 const RedeemHistory = ({ onBackMain }: RedeemHistoryProps) => (
-  <div className="space-y-6">
-    <div className="flex min-h-[280px] flex-col items-center justify-center rounded-2xl border border-border bg-background">
-      <div className="mb-4 rounded-2xl bg-surface-card-2 p-4">
-        <FileText className="h-12 w-12 text-text-brief" />
+  <div className="space-y-5">
+    <div className="flex min-h-[220px] flex-col items-center justify-center rounded-2xl border border-border bg-background">
+      <div className="mb-3 rounded-xl bg-surface-card-2 p-3">
+        <FileText className="h-10 w-10 text-text-brief" />
       </div>
-      <p className="text-2xl text-text-body-2">暂无兑换记录</p>
+      <p className="text-sm text-text-body-2">暂无兑换记录</p>
     </div>
 
     <div className="h-px bg-border" />
