@@ -130,7 +130,7 @@ const RedeemMain = ({ onOpenHistory, onRedeem }: RedeemMainProps) => {
           placeholder="请输入卡密"
           value={code}
           onChange={(e) => { setCode(e.target.value); setError(""); }}
-          className="h-12 rounded-2xl border-border bg-surface-card-2 text-foreground placeholder:text-text-brief"
+          className="h-12 rounded-2xl border-border bg-surface-card-2 text-foreground placeholder:text-text-brief focus:ring-1 focus:ring-primary focus:border-primary"
         />
         {error && <p className="mt-1.5 text-sm text-destructive">{error}</p>}
       </div>
@@ -179,22 +179,22 @@ const RedeemHistory = ({ onBackMain }: RedeemHistoryProps) => (
       <Table>
         <TableHeader>
           <TableRow className="bg-surface-card-2">
-            <TableHead className="text-text-title">卡密</TableHead>
-            <TableHead className="text-text-title">兑换时间</TableHead>
-            <TableHead className="text-text-title">到期时间</TableHead>
-            <TableHead className="text-text-title">套餐类型</TableHead>
-            <TableHead className="text-text-title">状态</TableHead>
+            <TableHead className="text-foreground">卡密</TableHead>
+            <TableHead className="text-foreground">兑换时间</TableHead>
+            <TableHead className="text-foreground">到期时间</TableHead>
+            <TableHead className="text-foreground">套餐类型</TableHead>
+            <TableHead className="text-foreground">状态</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
           {mockHistory.map((row) => (
             <TableRow key={row.code}>
-              <TableCell className="font-mono text-sm text-text-body-2">{row.code}</TableCell>
-              <TableCell className="text-sm text-text-body-2">{row.redeemTime}</TableCell>
-              <TableCell className="text-sm text-text-body-2">{row.expireTime}</TableCell>
-              <TableCell className="text-sm text-text-body-2">{row.plan}</TableCell>
+              <TableCell className="font-mono text-sm text-foreground">{row.code}</TableCell>
+              <TableCell className="text-sm text-foreground">{row.redeemTime}</TableCell>
+              <TableCell className="text-sm text-foreground">{row.expireTime}</TableCell>
+              <TableCell className="text-sm text-foreground">{row.plan}</TableCell>
               <TableCell>
-                <Badge variant={row.status === "已兑换" ? "default" : "secondary"} className="rounded-full">
+                <Badge className={`rounded-full ${row.status === "已兑换" ? "bg-green-500 text-white hover:bg-green-600" : "bg-red-500 text-white hover:bg-red-600"}`}>
                   {row.status}
                 </Badge>
               </TableCell>
