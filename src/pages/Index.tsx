@@ -83,10 +83,10 @@ const RedeemMain = ({ onOpenHistory }: RedeemMainProps) => {
 
       <div className="space-y-3">
         <div className="relative flex items-center justify-between">
-          <h3 className="text-[1.75rem] font-semibold leading-none text-text-title">操作流程</h3>
+          <h3 className="text-base font-semibold leading-none text-text-title">操作流程</h3>
           <button
             type="button"
-            className="text-[1.75rem] text-text-body-2 transition-colors hover:text-primary"
+            className="text-sm text-text-body-2 transition-colors hover:text-primary"
             onClick={() => setShowQr((prev) => !prev)}
           >
             联系客服
@@ -96,25 +96,25 @@ const RedeemMain = ({ onOpenHistory }: RedeemMainProps) => {
 
         <div className="grid gap-3 md:grid-cols-3">
           {steps.map((step, index) => (
-            <Card key={step.title} className="rounded-3xl border border-border bg-card p-5 shadow-soft">
-              <div className="mb-4 flex h-8 w-8 items-center justify-center rounded-full bg-primary text-sm font-semibold text-primary-foreground">
+            <Card key={step.title} className="rounded-2xl border border-border bg-card p-4 shadow-soft">
+              <div className="mb-3 flex h-6 w-6 items-center justify-center rounded-full bg-primary text-xs font-semibold text-primary-foreground">
                 {index + 1}
               </div>
-              <h4 className="mb-2 text-3xl font-semibold text-text-title">{step.title}</h4>
-              <p className="whitespace-pre-line text-xl leading-8 text-text-body-2">{step.desc}</p>
+              <h4 className="mb-1.5 text-base font-semibold text-text-title">{step.title}</h4>
+              <p className="whitespace-pre-line text-sm leading-relaxed text-text-body-2">{step.desc}</p>
             </Card>
           ))}
         </div>
       </div>
 
-      <p className="text-[1.75rem] text-text-title">
+      <p className="text-sm text-text-body-2">
         想要查看历史兑换信息?点击
         <button
           type="button"
           onClick={onOpenHistory}
-          className="ml-2 text-primary transition-opacity hover:opacity-80"
+          className="ml-1 text-primary transition-opacity hover:opacity-80"
         >
-          [兑换记录]
+          「兑换记录」
         </button>
       </p>
     </div>
@@ -126,12 +126,12 @@ interface RedeemHistoryProps {
 }
 
 const RedeemHistory = ({ onBackMain }: RedeemHistoryProps) => (
-  <div className="space-y-6">
-    <div className="flex min-h-[280px] flex-col items-center justify-center rounded-2xl border border-border bg-background">
-      <div className="mb-4 rounded-2xl bg-surface-card-2 p-4">
-        <FileText className="h-12 w-12 text-text-brief" />
+  <div className="space-y-5">
+    <div className="flex min-h-[220px] flex-col items-center justify-center rounded-2xl border border-border bg-background">
+      <div className="mb-3 rounded-xl bg-surface-card-2 p-3">
+        <FileText className="h-10 w-10 text-text-brief" />
       </div>
-      <p className="text-2xl text-text-body-2">暂无兑换记录</p>
+      <p className="text-sm text-text-body-2">暂无兑换记录</p>
     </div>
 
     <div className="h-px bg-border" />
@@ -217,9 +217,9 @@ const Index = () => {
 
       {isMobile ? (
         <Drawer open={open} onOpenChange={closeAll}>
-          <DrawerContent className="max-h-[90vh] rounded-t-3xl border-border bg-card px-4 pb-6 pt-3">
+          <DrawerContent className="max-h-[90vh] rounded-t-2xl border-border bg-card px-4 pb-5 pt-2">
             <DrawerHeader className="px-1 text-left">
-              <DrawerTitle className="text-2xl text-text-title">{view === "main" ? "兑换卡密" : "卡密兑换记录"}</DrawerTitle>
+              <DrawerTitle className="text-base font-semibold text-text-title">{view === "main" ? "兑换卡密" : "卡密兑换记录"}</DrawerTitle>
               <DrawerDescription className="sr-only">兑换弹窗</DrawerDescription>
             </DrawerHeader>
             <div className="px-1">
@@ -233,9 +233,9 @@ const Index = () => {
         </Drawer>
       ) : (
         <Dialog open={open} onOpenChange={closeAll}>
-          <DialogContent className="max-w-5xl rounded-3xl border-border bg-card p-6 shadow-soft">
+          <DialogContent className="max-w-xl rounded-2xl border-border bg-card p-5 shadow-soft">
             <DialogHeader>
-              <DialogTitle className="text-4xl text-text-title">{view === "main" ? "兑换卡密" : "卡密兑换记录"}</DialogTitle>
+              <DialogTitle className="text-base font-semibold text-text-title">{view === "main" ? "兑换卡密" : "卡密兑换记录"}</DialogTitle>
               <DialogDescription className="sr-only">兑换弹窗</DialogDescription>
             </DialogHeader>
             {view === "main" ? (
