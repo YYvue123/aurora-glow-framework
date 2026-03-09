@@ -307,7 +307,7 @@ const Index = () => {
               <DrawerTitle className="text-base font-semibold text-text-title">{titleMap[view]}</DrawerTitle>
               <DrawerDescription className="sr-only">兑换弹窗</DrawerDescription>
             </DrawerHeader>
-            <div className="max-h-[calc(85vh-80px)] overflow-y-auto px-1">{content}</div>
+            <div className="max-h-[calc(85vh-80px)] overflow-y-auto px-1 scrollbar-none [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">{content}</div>
           </DrawerContent>
         </Drawer>
       ) : (
