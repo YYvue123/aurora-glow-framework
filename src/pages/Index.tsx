@@ -83,10 +83,10 @@ const RedeemMain = ({ onOpenHistory }: RedeemMainProps) => {
 
       <div className="space-y-3">
         <div className="relative flex items-center justify-between">
-          <h3 className="text-[1.75rem] font-semibold leading-none text-text-title">操作流程</h3>
+          <h3 className="text-base font-semibold leading-none text-text-title">操作流程</h3>
           <button
             type="button"
-            className="text-[1.75rem] text-text-body-2 transition-colors hover:text-primary"
+            className="text-sm text-text-body-2 transition-colors hover:text-primary"
             onClick={() => setShowQr((prev) => !prev)}
           >
             联系客服
@@ -96,12 +96,12 @@ const RedeemMain = ({ onOpenHistory }: RedeemMainProps) => {
 
         <div className="grid gap-3 md:grid-cols-3">
           {steps.map((step, index) => (
-            <Card key={step.title} className="rounded-3xl border border-border bg-card p-5 shadow-soft">
-              <div className="mb-4 flex h-8 w-8 items-center justify-center rounded-full bg-primary text-sm font-semibold text-primary-foreground">
+            <Card key={step.title} className="rounded-2xl border border-border bg-card p-4 shadow-soft">
+              <div className="mb-3 flex h-6 w-6 items-center justify-center rounded-full bg-primary text-xs font-semibold text-primary-foreground">
                 {index + 1}
               </div>
-              <h4 className="mb-2 text-3xl font-semibold text-text-title">{step.title}</h4>
-              <p className="whitespace-pre-line text-xl leading-8 text-text-body-2">{step.desc}</p>
+              <h4 className="mb-1.5 text-base font-semibold text-text-title">{step.title}</h4>
+              <p className="whitespace-pre-line text-sm leading-relaxed text-text-body-2">{step.desc}</p>
             </Card>
           ))}
         </div>
