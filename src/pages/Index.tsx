@@ -302,12 +302,12 @@ const Index = () => {
 
       {isMobile ? (
         <Drawer open={open} onOpenChange={closeAll}>
-          <DrawerContent className="max-h-[90vh] rounded-t-2xl border-border bg-card px-4 pb-5 pt-2">
+          <DrawerContent className="max-h-[85vh] rounded-t-2xl border-border bg-card px-4 pb-5 pt-2">
             <DrawerHeader className="px-1 text-left">
               <DrawerTitle className="text-base font-semibold text-text-title">{titleMap[view]}</DrawerTitle>
               <DrawerDescription className="sr-only">兑换弹窗</DrawerDescription>
             </DrawerHeader>
-            <div className="px-1">{content}</div>
+            <div className="max-h-[calc(85vh-80px)] overflow-y-auto px-1">{content}</div>
           </DrawerContent>
         </Drawer>
       ) : (
