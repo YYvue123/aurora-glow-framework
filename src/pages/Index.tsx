@@ -124,15 +124,15 @@ const RedeemMain = ({ onOpenHistory, onRedeem }: RedeemMainProps) => {
   };
 
   return (
-    <div className="space-y-5">
+    <div className="space-y-5 pt-2">
       <div>
         <Input
           placeholder="请输入卡密"
           value={code}
           onChange={(e) => { setCode(e.target.value); setError(""); }}
-          className="h-12 rounded-2xl border-border bg-surface-card-2 text-foreground placeholder:text-text-brief focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary"
+          className="h-12 rounded-2xl border-border bg-surface-card-2 text-foreground placeholder:text-text-brief focus:outline-none focus:border-primary focus:ring-0 focus-visible:ring-0 focus-visible:ring-offset-0"
         />
-        {error && <p className="mt-1.5 text-sm text-destructive">{error}</p>}
+        {error && <p className="mt-1.5 text-sm text-red-500 dark:text-red-400">{error}</p>}
       </div>
 
       <Button onClick={handleRedeem} className="h-12 w-full rounded-full bg-tech-gradient text-primary-foreground transition-all duration-200 hover:opacity-90">
