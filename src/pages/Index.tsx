@@ -217,9 +217,9 @@ const Index = () => {
 
       {isMobile ? (
         <Drawer open={open} onOpenChange={closeAll}>
-          <DrawerContent className="max-h-[90vh] rounded-t-3xl border-border bg-card px-4 pb-6 pt-3">
+          <DrawerContent className="max-h-[90vh] rounded-t-2xl border-border bg-card px-4 pb-5 pt-2">
             <DrawerHeader className="px-1 text-left">
-              <DrawerTitle className="text-2xl text-text-title">{view === "main" ? "兑换卡密" : "卡密兑换记录"}</DrawerTitle>
+              <DrawerTitle className="text-base font-semibold text-text-title">{view === "main" ? "兑换卡密" : "卡密兑换记录"}</DrawerTitle>
               <DrawerDescription className="sr-only">兑换弹窗</DrawerDescription>
             </DrawerHeader>
             <div className="px-1">
