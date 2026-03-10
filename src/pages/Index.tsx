@@ -1,5 +1,6 @@
-import { useEffect, useState, useCallback } from "react";
-import { Moon, Sun, Gift, FileText, CheckCircle2 } from "lucide-react";
+import { useEffect, useState, useCallback, useRef } from "react";
+import { Moon, Sun, Gift, FileText, PartyPopper } from "lucide-react";
+import confetti from "canvas-confetti";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
