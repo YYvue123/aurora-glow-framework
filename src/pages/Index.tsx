@@ -76,33 +76,48 @@ interface SuccessViewProps {
   countdown: number;
 }
 
-const SuccessView = ({ countdown }: SuccessViewProps) => (
-  <div className="flex flex-col items-center gap-4 py-8">
-    <div className="relative">
-      {/* confetti dots */}
-      {[...Array(12)].map((_, i) => (
-        <span
-          key={i}
-          className="absolute h-1.5 w-1.5 rounded-full"
-          style={{
-            background: ["#FF6B6B", "#4ECDC4", "#FFE66D", "#6FD6B4", "#5252E5", "#FF9F43"][i % 6],
-            top: `${50 + 40 * Math.sin((i * Math.PI * 2) / 12)}%`,
-            left: `${50 + 40 * Math.cos((i * Math.PI * 2) / 12)}%`,
-            transform: "translate(-50%,-50%)",
-          }}
-        />
-      ))}
-      <div className="flex h-16 w-16 items-center justify-center rounded-full bg-[hsl(142,71%,45%)]">
-        <CheckCircle2 className="h-10 w-10 text-white" strokeWidth={2.5} />
+const SuccessView = ({ countdown }: SuccessViewProps) => {
+  const fired = useRef(false);
+
+  useEffect(() => {
+    if (fired.current) return;
+    fired.current = true;
+
+    const end = Date.now() + 1500;
+    const colors = ["#FF6B6B", "#4ECDC4", "#FFE66D", "#5252E5", "#FF9F43", "#6FD6B4"];
+
+    (function frame() {
+      confetti({
+        particleCount: 3,
+        angle: 60,
+        spread: 55,
+        origin: { x: 0, y: 0.6 },
+        colors,
+      });
+      confetti({
+        particleCount: 3,
+        angle: 120,
+        spread: 55,
+        origin: { x: 1, y: 0.6 },
+        colors,
+      });
+      if (Date.now() < end) requestAnimationFrame(frame);
+    })();
+  }, []);
+
+  return (
+    <div className="flex flex-col items-center gap-4 py-8">
+      <div className="flex h-16 w-16 items-center justify-center rounded-full bg-[hsl(142,71%,45%)] animate-[bounce_0.6s_ease-in-out]">
+        <PartyPopper className="h-9 w-9 text-white" strokeWidth={2} />
       </div>
+      <h3 className="text-lg font-semibold text-text-title">兑换成功</h3>
+      <p className="text-sm text-text-body-2">权益已充值到账,快去体验吧!</p>
+      <Button className="mt-2 h-12 w-full rounded-full bg-tech-gradient text-primary-foreground hover:opacity-90">
+        立即使用 ({countdown}s)
+      </Button>
     </div>
-    <h3 className="text-lg font-semibold text-text-title">兑换成功</h3>
-    <p className="text-sm text-text-body-2">权益已充值到账,快去体验吧!</p>
-    <Button className="mt-2 h-12 w-full rounded-full bg-tech-gradient text-primary-foreground hover:opacity-90">
-      立即使用 ({countdown}s)
-    </Button>
-  </div>
-);
+  );
+};
 
 /* ---------- Redeem Main ---------- */
 interface RedeemMainProps {
